@@ -1,0 +1,98 @@
+<%- include('partials/header') %>
+
+<div class="container mt-5">
+    <h2 class="mb-4">Favori Tariflerim</h2>
+    
+    <div id="favoritesList" class="row">
+        <!-- Favori tarifler buraya dinamik olarak eklenecek -->
+    </div>
+</div>
+
+<script>
+// Sayfa yüklendiğinde favori tarifleri getir
+document.addEventListener('DOMContentLoaded', async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        alert('Lütfen giriş yapın');
+        window.location.href = '/auth/login';
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/favorites', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Favori tarifler yüklenemedi');
+        }
+
+        const favorites = await response.json();
+        displayFavorites(favorites);
+    } catch (error) {
+        console.error('Hata:', error);
+        alert('Favori tarifler yüklenirken bir hata oluştu');
+    }
+});
+
+// Favori tarifleri görüntüle
+function displayFavorites(favorites) {
+    const container = document.getElementById('favoritesList');
+    
+    if (favorites.length === 0) {
+        container.innerHTML = '<div class="col-12"><p class="text-center">Henüz favori tarifiniz bulunmuyor.</p></div>';
+        return;
+    }
+
+    container.innerHTML = favorites.map(recipe => `
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img src="${recipe.imageUrl}" class="card-img-top" alt="${recipe.title}">
+                <div class="card-body">
+                    <h5 class="card-title">${recipe.title}</h5>
+                    <p class="card-text">${recipe.instructions.substring(0, 100)}...</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="/recipes/${recipe._id}" class="btn btn-primary">Tarifi Gör</a>
+                        <button class="btn btn-danger" onclick="removeFavorite('${recipe._id}')">
+                            <i class="bi bi-heart-fill"></i> Favorilerden Çıkar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Favori tarifi kaldır
+async function removeFavorite(recipeId) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        alert('Lütfen giriş yapın');
+        window.location.href = '/auth/login';
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/favorites/${recipeId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Tarif favorilerden kaldırılamadı');
+        }
+
+        // Sayfayı yenile
+        window.location.reload();
+    } catch (error) {
+        console.error('Hata:', error);
+        alert('Tarif favorilerden kaldırılırken bir hata oluştu');
+    }
+}
+</script>
+
+<%- include('partials/footer') %> 

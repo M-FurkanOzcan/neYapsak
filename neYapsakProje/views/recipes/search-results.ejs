@@ -1,0 +1,96 @@
+<%- include('../partials/header') %>
+
+<div class="container">
+  <div class="row mb-4">
+    <div class="col-12">
+      <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Ana Sayfa</a></li>
+          <li class="breadcrumb-item"><a href="/recipes">Tarifler</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Arama Sonuçları</li>
+        </ol>
+      </nav>
+      
+      <h1 class="mb-3">Arama Sonuçları</h1>
+      <p class="text-muted">Aranan malzemeler: <strong><%= searchTerms %></strong></p>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-12">
+      <form action="/recipes/search" method="POST" class="card p-3">
+        <div class="input-group">
+          <input type="text" name="ingredients" class="form-control" placeholder="Malzemeleri virgülle ayırarak yazın (örn: domates, soğan, peynir)" required value="<%= searchTerms %>">
+          <button type="submit" class="btn btn-primary">Tarif Ara</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <% if (recipes && recipes.length > 0) { %>
+      <% recipes.forEach(recipe => { %>
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <img src="<%= recipe.imageUrl %>" class="card-img-top" alt="<%= recipe.title %>">
+            <div class="card-body">
+              <h5 class="card-title"><%= recipe.title %></h5>
+              <p class="card-text">
+                <small class="text-muted">
+                  <i class="bi bi-clock"></i> <%= recipe.cookingTime %> dakika
+                  <span class="mx-2">•</span>
+                  <i class="bi bi-people"></i> <%= recipe.servings %> porsiyon
+                </small>
+              </p>
+              <p class="card-text">
+                <strong>Malzemeler:</strong> 
+                <%= recipe.ingredients.map(i => i.name).join(', ') %>
+              </p>
+              
+              <!-- Match Indicator -->
+              <div class="mt-3">
+                <% 
+                  const searchIngredientsArray = searchTerms.split(',').map(item => item.trim().toLowerCase());
+                  const recipeIngredientsArray = recipe.ingredients.map(i => i.name.toLowerCase());
+                  const matchCount = searchIngredientsArray.filter(item => 
+                    recipeIngredientsArray.some(ingredient => ingredient.includes(item))
+                  ).length;
+                  const matchPercentage = Math.round((matchCount / searchIngredientsArray.length) * 100);
+                %>
+                <div class="progress" style="height: 10px;">
+                  <div 
+                    class="progress-bar bg-success" 
+                    role="progressbar" 
+                    style="width: <%= matchPercentage %>%;"
+                    aria-valuenow="<%= matchPercentage %>" 
+                    aria-valuemin="0" 
+                    aria-valuemax="100">
+                  </div>
+                </div>
+                <small class="text-muted">Eşleşme: <%= matchPercentage %>%</small>
+              </div>
+            </div>
+            <div class="card-footer bg-white border-top-0">
+              <a href="/recipes/<%= recipe._id %>" class="btn btn-outline-primary w-100">Tarifi Gör</a>
+            </div>
+          </div>
+        </div>
+      <% }); %>
+    <% } else { %>
+      <div class="col-12 text-center py-5">
+        <div class="card shadow">
+          <div class="card-body py-5">
+            <h3 class="mb-3">Aradığınız malzemelerle tarif bulunamadı</h3>
+            <p class="mb-4">Farklı malzemelerle aramayı deneyebilir veya yeni bir tarif ekleyebilirsiniz.</p>
+            <div class="d-flex justify-content-center">
+              <a href="/recipes" class="btn btn-outline-primary mx-2">Tüm Tariflere Dön</a>
+              <a href="/recipes/new" class="btn btn-primary mx-2">Yeni Tarif Ekle</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% } %>
+  </div>
+</div>
+
+<%- include('../partials/footer') %> 

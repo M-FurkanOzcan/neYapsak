@@ -1,0 +1,116 @@
+<%- include('partials/header') %>
+
+<!-- Hero section -->
+<section class="hero py-5 bg-light rounded">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6">
+        <h1 class="display-4 fw-bold mb-3">Eldeki Malzemelerle Nefis Tarifler</h1>
+        <p class="lead mb-4">Evde hangi malzemeler var? Onlarla neler yapabileceğinizi keşfedin.</p>
+        <div class="search-box">
+          <form action="/recipes/search" method="POST" class="mb-4">
+            <div class="input-group">
+              <input type="text" name="ingredients" class="form-control form-control-lg" placeholder="Malzemeleri virgülle ayırarak yazın (örn: domates, soğan, peynir)" required>
+              <button type="submit" class="btn btn-primary btn-lg">Tarif Bul</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <img src="/img/hero-image.jpg" alt="Yemek Tarifleri" class="img-fluid rounded">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Recipes Section -->
+<section class="featured-recipes py-5">
+  <div class="container">
+    <div class="section-title text-center mb-5">
+      <h2>Öne Çıkan Tarifler</h2>
+      <p class="text-muted">En sevilen ve pratik tariflerimiz</p>
+    </div>
+    
+    <div class="row">
+      <% if (recipes && recipes.length > 0) { %>
+        <% recipes.forEach(recipe => { %>
+          <div class="col-md-4 mb-4">
+            <div class="card h-100">
+              <img src="<%= recipe.imageUrl %>" class="card-img-top" alt="<%= recipe.title %>">
+              <div class="card-body">
+                <h5 class="card-title"><%= recipe.title %></h5>
+                <p class="card-text">
+                  <small class="text-muted">
+                    <i class="bi bi-clock"></i> <%= recipe.cookingTime %> dakika
+                    <span class="mx-2">•</span>
+                    <i class="bi bi-people"></i> <%= recipe.servings %> porsiyon
+                  </small>
+                </p>
+                <p class="card-text">
+                  <strong>Malzemeler:</strong> 
+                  <%= recipe.ingredients.map(i => i.name).join(', ') %>
+                </p>
+              </div>
+              <div class="card-footer bg-white border-top-0">
+                <a href="/recipes/<%= recipe._id %>" class="btn btn-outline-primary w-100">Tarifi Gör</a>
+              </div>
+            </div>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <div class="col-12 text-center">
+          <p>Henüz tarif eklenmemiş. İlk ekleyen siz olun!</p>
+          <a href="/recipes/new" class="btn btn-primary">Tarif Ekle</a>
+        </div>
+      <% } %>
+    </div>
+    
+    <div class="text-center mt-4">
+      <a href="/recipes" class="btn btn-outline-primary">Tüm Tarifleri Gör</a>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="how-it-works py-5 bg-light rounded">
+  <div class="container">
+    <div class="section-title text-center mb-5">
+      <h2>Nasıl Çalışır?</h2>
+      <p class="text-muted">Birkaç basit adımda, evinizdeki malzemelerle yapabileceğiniz tarifleri bulun</p>
+    </div>
+    
+    <div class="row text-center">
+      <div class="col-md-4 mb-4">
+        <div class="how-step p-4 bg-white rounded shadow-sm h-100">
+          <div class="icon-box mb-3">
+            <span class="fs-1 text-primary">1</span>
+          </div>
+          <h4>Malzemeleri Girin</h4>
+          <p>Evinizdeki malzemeleri arama kutusuna yazın</p>
+        </div>
+      </div>
+      
+      <div class="col-md-4 mb-4">
+        <div class="how-step p-4 bg-white rounded shadow-sm h-100">
+          <div class="icon-box mb-3">
+            <span class="fs-1 text-primary">2</span>
+          </div>
+          <h4>Tarifleri Keşfedin</h4>
+          <p>Size uygun tarifleri inceleyin ve beğendiklerinizi kaydedin</p>
+        </div>
+      </div>
+      
+      <div class="col-md-4 mb-4">
+        <div class="how-step p-4 bg-white rounded shadow-sm h-100">
+          <div class="icon-box mb-3">
+            <span class="fs-1 text-primary">3</span>
+          </div>
+          <h4>Pişirin ve Paylaşın</h4>
+          <p>Tarifi uygulayın ve deneyimlerinizi diğer kullanıcılarla paylaşın</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %> 

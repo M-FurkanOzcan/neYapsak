@@ -1,0 +1,188 @@
+[
+  {
+    "title": "Kıymalı Ispanak",
+    "ingredients": [
+      {"name": "ıspanak", "quantity": "500g"},
+      {"name": "kıyma", "quantity": "250g"},
+      {"name": "soğan", "quantity": "1 adet"},
+      {"name": "sarımsak", "quantity": "2 diş"},
+      {"name": "zeytinyağı", "quantity": "2 yemek kaşığı"},
+      {"name": "tuz", "quantity": "1 çay kaşığı"},
+      {"name": "karabiber", "quantity": "1/2 çay kaşığı"}
+    ],
+    "instructions": "Soğanı ve sarımsağı ince doğrayın. Zeytinyağını tavada ısıtın. Soğanları ekleyip pembeleşinceye kadar soteleyin. Sarımsakları ekleyin ve 1 dakika daha pişirin. Kıymayı ekleyip rengi değişene kadar kavurun. Ispanakları ekleyin ve 5-7 dakika pişirin. Tuz ve karabiber ile tatlandırın.",
+    "cookingTime": 25,
+    "servings": 4,
+    "imageUrl": "https://i.lezzet.com.tr/images-xxlarge-recipe/kiymali-ispanak-33bfb35a-3356-4347-9c10-12c57602e50a.jpg"
+  },
+  {
+    "title": "Mercimek Çorbası",
+    "ingredients": [
+      {"name": "kırmızı mercimek", "quantity": "1 su bardağı"},
+      {"name": "soğan", "quantity": "1 adet"},
+      {"name": "havuç", "quantity": "1 adet"},
+      {"name": "patates", "quantity": "1 adet"},
+      {"name": "tereyağı", "quantity": "1 yemek kaşığı"},
+      {"name": "sıvı yağ", "quantity": "2 yemek kaşığı"},
+      {"name": "tuz", "quantity": "1 tatlı kaşığı"},
+      {"name": "karabiber", "quantity": "1/2 çay kaşığı"},
+      {"name": "kırmızı biber", "quantity": "1/2 çay kaşığı"},
+      {"name": "su", "quantity": "6 su bardağı"}
+    ],
+    "instructions": "Mercimekleri yıkayın. Soğan, havuç ve patatesi küçük küpler halinde doğrayın. Tencereye yağları alıp soğanları kavurun. Havuç ve patatesi ekleyin, 5 dakika karıştırarak pişirin. Mercimekleri ve suyu ekleyin. Kaynayınca kısık ateşte 30 dakika pişirin. Blenderdan geçirin, tuz ve baharatları ekleyin.",
+    "cookingTime": 45,
+    "servings": 6,
+    "imageUrl": "https://cdn.yemek.com/mncrop/940/625/uploads/2014/06/mercimek-corbasi-yemekcom.jpg"
+  },
+  {
+    "title": "Patates Salatası",
+    "ingredients": [
+      {"name": "patates", "quantity": "5 adet"},
+      {"name": "mayonez", "quantity": "3 yemek kaşığı"},
+      {"name": "yoğurt", "quantity": "3 yemek kaşığı"},
+      {"name": "turşu", "quantity": "5 adet"},
+      {"name": "taze soğan", "quantity": "3 adet"},
+      {"name": "tuz", "quantity": "1 çay kaşığı"},
+      {"name": "karabiber", "quantity": "1/2 çay kaşığı"}
+    ],
+    "instructions": "Patatesleri haşlayın ve küp küp doğrayın. Turşu ve taze soğanları ince doğrayın. Mayonez ve yoğurdu karıştırın. Tüm malzemeleri bir kasede birleştirin. Tuz ve karabiber ekleyip karıştırın.",
+    "cookingTime": 30,
+    "servings": 4,
+    "imageUrl": "https://i.lezzet.com.tr/images-xxlarge-recipe/patates-salatasi-901dc092-1b15-4df9-97e7-64a7424f48a5.jpg"
+  },
+  {
+    "title": "Köfte Patates",
+    "ingredients": [
+      {"name": "kıyma", "quantity": "500g"},
+      {"name": "patates", "quantity": "5 adet"},
+      {"name": "soğan", "quantity": "1 adet"},
+      {"name": "sarımsak", "quantity": "2 diş"},
+      {"name": "maydanoz", "quantity": "1 demet"},
+      {"name": "yumurta", "quantity": "1 adet"},
+      {"name": "galeta unu", "quantity": "2 yemek kaşığı"},
+      {"name": "tuz", "quantity": "1 tatlı kaşığı"},
+      {"name": "karabiber", "quantity": "1 çay kaşığı"},
+      {"name": "kimyon", "quantity": "1 çay kaşığı"},
+      {"name": "pul biber", "quantity": "1 çay kaşığı"},
+      {"name": "sıvı yağ", "quantity": "3 yemek kaşığı"}
+    ],
+    "instructions": "Köfte için kıyma, rendelenmiş soğan, sarımsak, maydanoz, yumurta, galeta unu ve baharatları karıştırın. Yuvarlak köfteler yapın. Patatesleri dilimleyin. Fırın tepsisine önce patatesleri, sonra köfteleri dizin. 200 derece fırında 30-35 dakika pişirin.",
+    "cookingTime": 45,
+    "servings": 4,
+    "imageUrl": "https://i.lezzet.com.tr/images-xxlarge-recipe/firinda-kofte-patates-32c01e75-cf14-42e7-a7a5-a7c20ee19a2f.jpg"
+  },
+  {
+    "title": "Kabak Mücver",
+    "ingredients": [
+      {"name": "kabak", "quantity": "3 adet"},
+      {"name": "havuç", "quantity": "1 adet"},
+      {"name": "soğan", "quantity": "1 adet"},
+      {"name": "maydanoz", "quantity": "1 demet"},
+      {"name": "dereotu", "quantity": "1/2 demet"},
+      {"name": "un", "quantity": "1 su bardağı"},
+      {"name": "yumurta", "quantity": "2 adet"},
+      {"name": "peynir", "quantity": "100g"},
+      {"name": "tuz", "quantity": "1 çay kaşığı"},
+      {"name": "karabiber", "quantity": "1/2 çay kaşığı"},
+      {"name": "sıvı yağ", "quantity": "Kızartmak için"}
+    ],
+    "instructions": "Kabakları rendeleyin ve suyunu sıkın. Soğan, havuç, maydanoz ve dereotunu ince doğrayın. Tüm sebzeleri bir kapta birleştirin. Yumurta, tuz, karabiber ve unu ekleyip karıştırın. Peyniri ekleyin. Tavada yağı kızdırın. Karışımı kaşıkla alıp tavaya koyun ve her iki tarafını kızartın.",
+    "cookingTime": 30,
+    "servings": 4,
+    "imageUrl": "https://cdn.yemek.com/mncrop/940/625/uploads/2015/01/mucver-yemekcom.jpg"
+  },
+  {
+    "title": "Kremalı Mantar Soslu Makarna",
+    "ingredients": [
+      {"name": "makarna", "quantity": "500g"},
+      {"name": "mantar", "quantity": "300g"},
+      {"name": "krema", "quantity": "200ml"},
+      {"name": "soğan", "quantity": "1 adet"},
+      {"name": "sarımsak", "quantity": "2 diş"},
+      {"name": "tereyağı", "quantity": "2 yemek kaşığı"},
+      {"name": "zeytinyağı", "quantity": "1 yemek kaşığı"},
+      {"name": "tuz", "quantity": "1 çay kaşığı"},
+      {"name": "karabiber", "quantity": "1/2 çay kaşığı"},
+      {"name": "parmesan peyniri", "quantity": "3 yemek kaşığı"}
+    ],
+    "instructions": "Makarnayı tuzlu suda haşlayın. Soğan ve sarımsağı ince doğrayın. Mantarları dilimleyin. Tavada tereyağı ve zeytinyağını ısıtın. Soğan ve sarımsağı ekleyip kavurun. Mantarları ekleyin ve suyunu çekene kadar pişirin. Kremayı ekleyin ve 3-4 dakika kaynatın. Haşlanmış makarnayı ekleyin ve karıştırın. Tuz ve karabiber ile tatlandırın. Servis yaparken parmesan peyniri serpin.",
+    "cookingTime": 25,
+    "servings": 4,
+    "imageUrl": "https://cdn.yemek.com/mncrop/940/625/uploads/2014/11/kremali-makarna.jpg"
+  },
+  {
+    "title": "Fırında Tavuk But",
+    "ingredients": [
+      {"name": "tavuk but", "quantity": "8 adet"},
+      {"name": "patates", "quantity": "4 adet"},
+      {"name": "domates", "quantity": "2 adet"},
+      {"name": "biber", "quantity": "2 adet"},
+      {"name": "soğan", "quantity": "1 adet"},
+      {"name": "sarımsak", "quantity": "4 diş"},
+      {"name": "zeytinyağı", "quantity": "3 yemek kaşığı"},
+      {"name": "tuz", "quantity": "1 tatlı kaşığı"},
+      {"name": "karabiber", "quantity": "1 çay kaşığı"},
+      {"name": "kekik", "quantity": "1 çay kaşığı"},
+      {"name": "pul biber", "quantity": "1 çay kaşığı"}
+    ],
+    "instructions": "Tavuk butları yıkayıp kurulayın. Patatesleri, domatesleri, biberleri ve soğanı iri parçalar halinde doğrayın. Sarımsakları bütün olarak bırakın. Tüm malzemeleri fırın tepsisine yerleştirin. Üzerine zeytinyağı, tuz ve baharatları ekleyin. 200 derece fırında 45-50 dakika pişirin.",
+    "cookingTime": 60,
+    "servings": 4,
+    "imageUrl": "https://cdn.yemek.com/mncrop/940/625/uploads/2014/09/firinda-baharatli-tavuk-but-yemekcom.jpg"
+  },
+  {
+    "title": "Zeytinyağlı Fasulye",
+    "ingredients": [
+      {"name": "taze fasulye", "quantity": "1kg"},
+      {"name": "soğan", "quantity": "2 adet"},
+      {"name": "domates", "quantity": "2 adet"},
+      {"name": "zeytinyağı", "quantity": "5 yemek kaşığı"},
+      {"name": "tuz", "quantity": "1 tatlı kaşığı"},
+      {"name": "şeker", "quantity": "1 çay kaşığı"},
+      {"name": "su", "quantity": "1 su bardağı"}
+    ],
+    "instructions": "Fasulyelerin uçlarını kesin ve yıkayın. Soğanları ince doğrayın. Domatesleri küp küp doğrayın. Tencereye zeytinyağını alın ve soğanları kavurun. Domatesleri ekleyin ve 5 dakika pişirin. Fasulyeleri, tuz ve şekeri ekleyin. Su ekleyip karıştırın. Kısık ateşte kapağı kapalı şekilde 30-35 dakika pişirin.",
+    "cookingTime": 45,
+    "servings": 6,
+    "imageUrl": "https://cdn.yemek.com/mncrop/940/625/uploads/2018/05/taze-fasulye-yemek-fotografi.jpg"
+  },
+  {
+    "title": "Karnıyarık",
+    "ingredients": [
+      {"name": "patlıcan", "quantity": "5 adet"},
+      {"name": "kıyma", "quantity": "300g"},
+      {"name": "soğan", "quantity": "2 adet"},
+      {"name": "domates", "quantity": "3 adet"},
+      {"name": "biber", "quantity": "2 adet"},
+      {"name": "sarımsak", "quantity": "3 diş"},
+      {"name": "maydanoz", "quantity": "1/2 demet"},
+      {"name": "zeytinyağı", "quantity": "5 yemek kaşığı"},
+      {"name": "tuz", "quantity": "1 tatlı kaşığı"},
+      {"name": "karabiber", "quantity": "1 çay kaşığı"},
+      {"name": "pul biber", "quantity": "1 çay kaşığı"}
+    ],
+    "instructions": "Patlıcanları alacalı soyun ve tuzlu suda bekletin. Soğan, sarımsak, biber ve domatesi küçük doğrayın. Tavada zeytinyağı ile soğan ve sarımsağı kavurun. Kıymayı ekleyip pişirin. Domates, biber ve baharatları ekleyin. Patlıcanları kızartın ve ortadan yarın. İçine kıymalı harç doldurun. Fırında 180 derecede 25 dakika pişirin.",
+    "cookingTime": 70,
+    "servings": 5,
+    "imageUrl": "https://cdn.yemek.com/mncrop/940/625/uploads/2015/05/karniyarik-yemekcom.jpg"
+  },
+  {
+    "title": "İmam Bayıldı",
+    "ingredients": [
+      {"name": "patlıcan", "quantity": "6 adet"},
+      {"name": "soğan", "quantity": "3 adet"},
+      {"name": "biber", "quantity": "3 adet"},
+      {"name": "domates", "quantity": "4 adet"},
+      {"name": "sarımsak", "quantity": "4 diş"},
+      {"name": "maydanoz", "quantity": "1 demet"},
+      {"name": "zeytinyağı", "quantity": "1 su bardağı"},
+      {"name": "tuz", "quantity": "1 tatlı kaşığı"},
+      {"name": "karabiber", "quantity": "1 çay kaşığı"},
+      {"name": "şeker", "quantity": "1 çay kaşığı"}
+    ],
+    "instructions": "Patlıcanları alacalı soyun. Ortadan ikiye kesip tuzlu suda bekletin. Soğan, biber, domates ve sarımsağı ince doğrayın. Maydanozu kıyın. Zeytinyağının yarısı ile sebzeleri kavurun. Tuz, karabiber ve şeker ekleyin. Patlıcanları kızartın. Yarıklarını açıp içine hazırladığınız harçtan doldurun. Kalan zeytinyağını üzerine gezdirip, 180 derece fırında 25-30 dakika pişirin.",
+    "cookingTime": 60,
+    "servings": 6,
+    "imageUrl": "https://cdn.yemek.com/mncrop/940/625/uploads/2014/07/imam-bayildi-yemekcom.jpg"
+  }
+] 

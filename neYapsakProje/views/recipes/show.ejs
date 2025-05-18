@@ -1,0 +1,203 @@
+<%- include('../partials/header') %>
+
+<div class="container py-4">
+  <div class="row">
+    <!-- Recipe Details -->
+    <div class="col-lg-8">
+      <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Ana Sayfa</a></li>
+          <li class="breadcrumb-item"><a href="/recipes">Tarifler</a></li>
+          <li class="breadcrumb-item active" aria-current="page"><%= recipe.title %></li>
+        </ol>
+      </nav>
+      
+      <div class="recipe-header mb-4">
+        <h1 class="mb-3"><%= recipe.title %></h1>
+        <div class="d-flex flex-wrap align-items-center text-muted mb-3">
+          <span class="me-3"><i class="bi bi-clock me-1"></i> <%= recipe.cookingTime %> dakika</span>
+          <span class="me-3"><i class="bi bi-people me-1"></i> <%= recipe.servings %> porsiyon</span>
+          <span><i class="bi bi-calendar me-1"></i> <%= new Date(recipe.createdAt).toLocaleDateString('tr-TR') %></span>
+        </div>
+      </div>
+      
+      <div class="mb-4">
+        <img src="<%= recipe.imageUrl %>" alt="<%= recipe.title %>" class="img-fluid rounded">
+      </div>
+      
+      <div class="card mb-4">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">Malzemeler</h5>
+        </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            <% recipe.ingredients.forEach(ingredient => { %>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <%= ingredient.name %>
+                <% if (ingredient.quantity) { %>
+                  <span class="badge bg-dark rounded-pill"><%= ingredient.quantity %></span>
+                <% } %>
+              </li>
+            <% }); %>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="card mb-4">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">Hazırlanışı</h5>
+        </div>
+        <div class="card-body">
+          <div class="instructions">
+            <p><%= recipe.instructions %></p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Comments Section -->
+      <div class="card mb-4">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">Yorumlar (<%= recipe.comments.length %>)</h5>
+        </div>
+        <div class="card-body">
+          <% if (recipe.comments.length > 0) { %>
+            <% recipe.comments.forEach(comment => { %>
+              <div class="comment mb-3 border-bottom pb-3">
+                <div class="d-flex justify-content-between">
+                  <h6 class="fw-bold"><%= comment.author %></h6>
+                  <small class="text-muted"><%= new Date(comment.date).toLocaleDateString('tr-TR') %></small>
+                </div>
+                <p class="mb-0"><%= comment.text %></p>
+              </div>
+            <% }); %>
+          <% } else { %>
+            <p class="text-center py-3">Bu tarif için henüz yorum yapılmamış. İlk yorumu siz yapın!</p>
+          <% } %>
+          
+          <form action="/recipes/<%= recipe._id %>/comments" method="POST" class="mt-4">
+            <h6>Yorum Yapın</h6>
+            <div class="mb-3">
+              <label for="author" class="form-label">İsminiz</label>
+              <input type="text" class="form-control" id="author" name="author" required>
+            </div>
+            <div class="mb-3">
+              <label for="text" class="form-label">Yorumunuz</label>
+              <textarea class="form-control" id="text" name="text" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-dark">Gönder</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Sidebar -->
+    <div class="col-lg-4">
+      <div class="card mb-4 sticky-top" style="top: 20px;">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">Tarif Bilgileri</h5>
+        </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Pişirme Süresi
+              <span class="badge bg-dark rounded-pill"><%= recipe.cookingTime %> dakika</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Porsiyon
+              <span class="badge bg-dark rounded-pill"><%= recipe.servings %> kişilik</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Malzeme Sayısı
+              <span class="badge bg-dark rounded-pill"><%= recipe.ingredients.length %></span>
+            </li>
+          </ul>
+          
+          <div class="d-grid gap-2 mt-3">
+            <% if (typeof user !== 'undefined' && user) { %>
+              <button id="favoriteButton" class="btn btn-dark" onclick="toggleFavorite('<%= recipe._id %>')">
+                <i class="bi bi-heart"></i> Favorilere Ekle
+              </button>
+            <% } else { %>
+              <a href="/auth/login" class="btn btn-dark">
+                Favorilere eklemek için giriş yapın
+              </a>
+            <% } %>
+            <a href="#" class="btn btn-outline-primary">
+              <i class="bi bi-printer me-2"></i>Tarifi Yazdır
+            </a>
+            <a href="#" class="btn btn-outline-primary">
+              <i class="bi bi-share me-2"></i>Tarifi Paylaş
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Sayfa yüklendiğinde favori durumunu kontrol et
+document.addEventListener('DOMContentLoaded', async () => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    try {
+        const response = await fetchWithAuth('/api/favorites');
+        if (!response) return;
+
+        const favorites = await response.json();
+        const isFavorite = favorites.some(fav => fav._id === '<%= recipe._id %>');
+        
+        const button = document.getElementById('favoriteButton');
+        if (button) {
+            if (isFavorite) {
+                button.innerHTML = '<i class="bi bi-heart-fill"></i> Favorilerden Çıkar';
+                button.classList.remove('btn-dark');
+                button.classList.add('btn-danger');
+            } else {
+                button.innerHTML = '<i class="bi bi-heart"></i> Favorilere Ekle';
+                button.classList.remove('btn-danger');
+                button.classList.add('btn-dark');
+            }
+        }
+    } catch (error) {
+        console.error('Hata:', error);
+    }
+});
+
+// Favori ekle/çıkar
+async function toggleFavorite(recipeId) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = '/auth/login';
+        return;
+    }
+
+    const button = document.getElementById('favoriteButton');
+    const isFavorite = button.classList.contains('btn-danger');
+
+    try {
+        const response = await fetchWithAuth(`/api/favorites/${recipeId}`, {
+            method: isFavorite ? 'DELETE' : 'POST'
+        });
+
+        if (!response) return;
+
+        // Buton durumunu güncelle
+        if (isFavorite) {
+            button.innerHTML = '<i class="bi bi-heart"></i> Favorilere Ekle';
+            button.classList.remove('btn-danger');
+            button.classList.add('btn-dark');
+        } else {
+            button.innerHTML = '<i class="bi bi-heart-fill"></i> Favorilerden Çıkar';
+            button.classList.remove('btn-dark');
+            button.classList.add('btn-danger');
+        }
+    } catch (error) {
+        console.error('Hata:', error);
+        alert('İşlem sırasında bir hata oluştu');
+    }
+}
+</script>
+
+<%- include('../partials/footer') %> 

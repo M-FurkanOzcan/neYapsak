@@ -1,0 +1,63 @@
+<%- include('../partials/header') %>
+
+<div class="container">
+  <div class="row mb-4">
+    <div class="col-md-8">
+      <h1 class="mb-3">Tüm Tarifler</h1>
+      <p class="text-muted">Kullanıcılarımız tarafından paylaşılan tüm tarifler burada listelenir</p>
+    </div>
+    <div class="col-md-4 text-md-end d-flex align-items-center justify-content-md-end">
+      <a href="/recipes/new" class="btn btn-primary">
+        <i class="bi bi-plus-circle me-2"></i>Yeni Tarif Ekle
+      </a>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-12">
+      <form action="/recipes/search" method="POST" class="card p-3">
+        <div class="input-group">
+          <input type="text" name="ingredients" class="form-control" placeholder="Malzemeleri virgülle ayırarak yazın (örn: domates, soğan, peynir)" required>
+          <button type="submit" class="btn btn-primary">Tarif Ara</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <% if (recipes && recipes.length > 0) { %>
+      <% recipes.forEach(recipe => { %>
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <img src="<%= recipe.imageUrl %>" class="card-img-top" alt="<%= recipe.title %>">
+            <div class="card-body">
+              <h5 class="card-title"><%= recipe.title %></h5>
+              <p class="card-text">
+                <small class="text-muted">
+                  <i class="bi bi-clock"></i> <%= recipe.cookingTime %> dakika
+                  <span class="mx-2">•</span>
+                  <i class="bi bi-people"></i> <%= recipe.servings %> porsiyon
+                </small>
+              </p>
+              <p class="card-text">
+                <strong>Malzemeler:</strong> 
+                <%= recipe.ingredients.map(i => i.name).join(', ') %>
+              </p>
+            </div>
+            <div class="card-footer bg-white border-top-0">
+              <a href="/recipes/<%= recipe._id %>" class="btn btn-outline-primary w-100">Tarifi Gör</a>
+            </div>
+          </div>
+        </div>
+      <% }); %>
+    <% } else { %>
+      <div class="col-12 text-center py-5">
+        <h3>Henüz hiç tarif eklenmemiş</h3>
+        <p class="mb-4">İlk tarifi eklemek ister misiniz?</p>
+        <a href="/recipes/new" class="btn btn-primary">Tarif Ekle</a>
+      </div>
+    <% } %>
+  </div>
+</div>
+
+<%- include('../partials/footer') %> 
