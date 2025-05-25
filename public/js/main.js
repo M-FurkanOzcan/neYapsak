@@ -19,6 +19,7 @@ async function fetchWithAuth(url, options = {}) {
     
     if (response.status === 401) {
         // Token geçersiz veya süresi dolmuş
+        //deneme
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         window.location.href = '/auth/login';
