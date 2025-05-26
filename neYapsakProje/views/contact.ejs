@@ -1,0 +1,28 @@
+<%- include('partials/header') %>
+
+<div class="container py-5">
+  <h2 class="text-center mb-4">Bize Ulaşın</h2>
+  <% if (typeof success !== 'undefined') { %>
+    <div class="alert alert-success text-center">Mesajınız başarıyla gönderildi!</div>
+  <% } %>
+
+  <form method="POST" action="/contact" class="mx-auto" style="max-width: 600px;">
+    <div class="mb-3">
+      <label for="name" class="form-label">Ad Soyad</label>
+      <input type="text" class="form-control" id="name" name="name" placeholder="Adınızı girin" required>
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email adresi</label>
+      <input type="email" class="form-control" id="email" name="email" placeholder="mail@ornek.com" required>
+    </div>
+    <div class="mb-3">
+      <label for="message" class="form-label">Mesajınız</label>
+      <textarea class="form-control" id="message" name="message" rows="5" placeholder="Mesajınızı buraya yazın..." required></textarea>
+    </div>
+    <div class="d-grid">
+      <button type="submit" class="btn btn-primary">Gönder</button>
+    </div>
+  </form>
+</div>
+
+<%- include('partials/footer') %>
