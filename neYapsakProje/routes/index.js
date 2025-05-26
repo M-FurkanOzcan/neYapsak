@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Recipe = require('../models/Recipe');
+const Message = require('../models/Message');
 
 // Home page route
 router.get('/', async (req, res) => {
@@ -29,9 +30,19 @@ router.get('/about', (req, res) => {
 
 // Contact page
 router.get('/contact', (req, res) => {
-  res.render('contact', { 
-    title: 'İletişim - NeYapsak' 
-  });
+  const success = req.query.success;
+  res.render('contact', { success });
+});
+
+router.post('/contact', async (req, res) => {
+  try {
+    const { name, email, message } = req.body;
+    await Message.create({ name, email, message });
+    res.redirect('/contact?success=1');
+  } catch (err) {
+    console.error('Mesaj gönderme hatası:', err);
+    res.status(500).send('Sunucu hatası. Lütfen tekrar deneyin.');
+  }
 });
 
 // Favorites page

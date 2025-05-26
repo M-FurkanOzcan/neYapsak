@@ -6,55 +6,65 @@ const mongoose = require('mongoose');
 const expressLayouts = require('express-ejs-layouts');
 const jwt = require('jsonwebtoken');
 const app = express();
+const cookieParser = require('cookie-parser');
+const User = require('./models/User'); // 🔼 En üstte tanımla
 
 // View engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
 app.set('layout', 'layout');
+app.use(cookieParser());
 
 // Middleware
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true }));
 
 // Kullanıcı bilgisini template'lere aktar
-app.use((req, res, next) => {
-    // Önce Authorization header'dan token'ı kontrol et
-    let token = req.header('Authorization')?.replace('Bearer ', '');
-    
-    // Eğer header'da yoksa, query string'den kontrol et
-    if (!token) {
-        token = req.query.token;
-    }
-    
-    // Eğer query string'de de yoksa, body'den kontrol et
-    if (!token) {
-        token = req.body.token;
-    }
+app.use(async (req, res, next) => {
+  let token = null;
 
-    if (token) {
-        try {
-            const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            req.user = decoded;
-            res.locals.user = decoded;
-        } catch (error) {
-            console.error('Token doğrulama hatası:', error);
-        }
+  if (req.cookies && req.cookies.token) {
+    token = req.cookies.token;
+  }
+
+  if (!token && req.header('Authorization')) {
+    token = req.header('Authorization').replace('Bearer ', '');
+  }
+
+  if (!token) {
+    token = req.query.token || req.body.token;
+  }
+
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await User.findById(decoded.userId).lean();
+      req.user = user;
+      res.locals.user = user;
+    } catch (error) {
+      console.error('Token doğrulama hatası:', error);
+      res.locals.user = null;
     }
-    next();
+  } else {
+    res.locals.user = null;
+  }
+
+  next();
 });
+
 
 // Database connection - MongoDB Atlas
 // Aşağıdaki URI'yi kendi MongoDB Atlas bağlantı adresinizle değiştirin
 const mongoURI = process.env.MONGO_URI;
 
-mongoose.connect(mongoURI, { 
-  useNewUrlParser: true, 
-  useUnifiedTopology: true 
+mongoose.connect(mongoURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 })
-.then(() => console.log('MongoDB Atlas bağlantısı başarılı'))
-.catch(err => console.error('MongoDB bağlantı hatası:', err));
+  .then(() => console.log('MongoDB Atlas bağlantısı başarılı'))
+  .catch(err => console.error('MongoDB bağlantı hatası:', err));
 
 // Routes
 const indexRoutes = require('./routes/index');

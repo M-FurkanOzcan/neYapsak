@@ -6,7 +6,7 @@ const Recipe = require('../models/Recipe');
 router.get('/', async (req, res) => {
   try {
     const recipes = await Recipe.find().sort({ createdAt: -1 });
-    res.render('recipes/index', { 
+    res.render('recipes/index', {
       title: 'Tüm Tarifler - NeYapsak',
       recipes
     });
@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
 
 // Show recipe form
 router.get('/new', (req, res) => {
-  res.render('recipes/new', { 
+  res.render('recipes/new', {
     title: 'Yeni Tarif Ekle - NeYapsak'
   });
 });
@@ -26,18 +26,19 @@ router.get('/new', (req, res) => {
 // Create new recipe
 router.post('/', async (req, res) => {
   try {
-    const { 
-      title, 
-      ingredients, 
-      instructions, 
-      cookingTime, 
-      servings, 
-      imageUrl 
+    const {
+      title,
+      ingredients,
+      instructions,
+      cookingTime,
+      servings,
+      imageUrl
     } = req.body;
-    
+
     // Parse ingredients from form
     const ingredientsArray = [];
-    if (Array.isArray(ingredients.name)) {
+
+    if (ingredients && Array.isArray(ingredients.name)) {
       for (let i = 0; i < ingredients.name.length; i++) {
         if (ingredients.name[i]) {
           ingredientsArray.push({
@@ -46,13 +47,16 @@ router.post('/', async (req, res) => {
           });
         }
       }
-    } else {
+    } else if (ingredients && ingredients.name) {
+      // Tek malzeme girildiğinde dizi yerine string gelebilir
       ingredientsArray.push({
         name: ingredients.name,
         quantity: ingredients.quantity || ''
       });
     }
-    
+
+
+
     const newRecipe = new Recipe({
       title,
       ingredients: ingredientsArray,
@@ -61,7 +65,7 @@ router.post('/', async (req, res) => {
       servings,
       imageUrl: imageUrl || 'default-recipe.jpg',
     });
-    
+
     await newRecipe.save();
     res.redirect(`/recipes/${newRecipe._id}`);
   } catch (err) {
@@ -75,12 +79,12 @@ router.get('/:id', async (req, res) => {
   try {
     const recipe = await Recipe.findById(req.params.id);
     if (!recipe) {
-      return res.status(404).render('error', { 
-        message: 'Tarif bulunamadı', 
-        error: { status: 404 } 
+      return res.status(404).render('error', {
+        message: 'Tarif bulunamadı',
+        error: { status: 404 }
       });
     }
-    res.render('recipes/show', { 
+    res.render('recipes/show', {
       title: `${recipe.title} - NeYapsak`,
       recipe
     });
@@ -94,24 +98,24 @@ router.get('/:id', async (req, res) => {
 router.post('/search', async (req, res) => {
   try {
     const { ingredients } = req.body;
-    
+
     // Create an array of ingredients from the comma-separated string
     const searchIngredients = ingredients
       .split(',')
       .map(item => item.trim().toLowerCase())
       .filter(item => item !== '');
-    
+
     if (searchIngredients.length === 0) {
       return res.redirect('/recipes');
     }
-    
+
     // Find recipes that contain the searched ingredients
     const recipes = await Recipe.find({
-      'ingredients.name': { 
-        $in: searchIngredients.map(item => new RegExp(item, 'i')) 
+      'ingredients.name': {
+        $in: searchIngredients.map(item => new RegExp(item, 'i'))
       }
     });
-    
+
     res.render('recipes/search-results', {
       title: 'Arama Sonuçları - NeYapsak',
       recipes,
@@ -128,14 +132,14 @@ router.post('/:id/comments', async (req, res) => {
   try {
     const { text, author } = req.body;
     const recipe = await Recipe.findById(req.params.id);
-    
+
     if (!recipe) {
-      return res.status(404).render('error', { 
-        message: 'Tarif bulunamadı', 
-        error: { status: 404 } 
+      return res.status(404).render('error', {
+        message: 'Tarif bulunamadı',
+        error: { status: 404 }
       });
     }
-    
+
     recipe.comments.push({ text, author });
     await recipe.save();
     res.redirect(`/recipes/${recipe._id}`);

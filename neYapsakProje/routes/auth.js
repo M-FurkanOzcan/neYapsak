@@ -73,41 +73,51 @@ router.post('/signup', async (req, res) => {
 });
 
 // Giriş yapma
+// Giriş yapma
 router.post('/login', async (req, res) => {
-    try {
-        const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-        // Kullanıcıyı bul
-        const user = await User.findOne({ email });
-        if (!user) {
-            return res.status(401).json({ message: 'Geçersiz email veya şifre' });
-        }
-
-        // Şifreyi kontrol et
-        const isMatch = await user.comparePassword(password);
-        if (!isMatch) {
-            return res.status(401).json({ message: 'Geçersiz email veya şifre' });
-        }
-
-        // JWT token oluştur
-        const token = jwt.sign(
-            { userId: user._id, username: user.username },
-            process.env.JWT_SECRET || 'your-secret-key',
-            { expiresIn: '24h' }
-        );
-
-        res.json({
-            message: 'Giriş başarılı',
-            token,
-            user: {
-                id: user._id,
-                username: user.username,
-                email: user.email
-            }
-        });
-    } catch (error) {
-        res.status(500).json({ message: 'Sunucu hatası', error: error.message });
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ message: 'Geçersiz email veya şifre' });
     }
+
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch) {
+      return res.status(401).json({ message: 'Geçersiz email veya şifre' });
+    }
+
+    const token = jwt.sign(
+      { userId: user._id, username: user.username },
+      process.env.JWT_SECRET || 'your-secret-key',
+      { expiresIn: '24h' }
+    );
+
+    // Token'ı cookie'ye yaz
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production' && req.secure,
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
+    // 🔽 JSON dön
+    return res.status(200).json({
+      message: 'Giriş başarılı',
+      token,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+      },
+    });
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Sunucu hatası' });
+  }
 });
+
+
 
 module.exports = router; 
