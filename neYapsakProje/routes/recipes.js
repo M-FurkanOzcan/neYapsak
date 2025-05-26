@@ -109,6 +109,7 @@ router.post('/search', async (req, res) => {
       return res.redirect('/recipes');
     }
 
+
     // Find recipes that contain the searched ingredients
     const recipes = await Recipe.find({
       'ingredients.name': {
@@ -116,9 +117,34 @@ router.post('/search', async (req, res) => {
       }
     });
 
+    
+    // Find recipes that contain AT LEAST ONE of the searched ingredients
+    const allMatchingRecipes = await Recipe.find({
+      'ingredients.name': { 
+        $in: searchIngredients.map(item => new RegExp(item, 'i')) 
+      }
+    }).lean(); // .lean() performansı artırabilir ve Mongoose dökümanlarını sadeleştirir
+
+    // Calculate match count for each recipe and sort
+    const sortedRecipes = allMatchingRecipes.map(recipe => {
+      let matchCount = 0;
+      // Tarifin malzeme isimlerini küçük harfe çevirerek bir dizi oluştur
+      const recipeIngredientNames = recipe.ingredients.map(ing => ing.name.toLowerCase());
+      
+      searchIngredients.forEach(searchIng => {
+        // Aranan her malzemenin, tarifin malzeme listesinde olup olmadığını kontrol et
+        // .includes() kullanarak kısmi eşleşmelere de izin ver (örneğin "domate" "domates" ile eşleşir)
+        // Tam eşleşme isteniyorsa: recipeIngredientNames.includes(searchIng)
+        if (recipeIngredientNames.some(recipeIngName => recipeIngName.includes(searchIng))) {
+          matchCount++;
+        }
+      });
+      return { ...recipe, matchCount }; // Orijinal tarife matchCount ekle
+    }).sort((a, b) => b.matchCount - a.matchCount); // Eşleşme sayısına göre büyükten küçüğe sırala
+    
     res.render('recipes/search-results', {
       title: 'Arama Sonuçları - NeYapsak',
-      recipes,
+      recipes: sortedRecipes, // Sıralanmış tarifleri gönder
       searchTerms: searchIngredients.join(', ')
     });
   } catch (err) {
